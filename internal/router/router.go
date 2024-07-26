@@ -4,6 +4,7 @@ import (
 	"github.com/Dimpal-Kalita/LetsNormalizeIt-backend/config"
 	"github.com/Dimpal-Kalita/LetsNormalizeIt-backend/internal/auth"
 	"github.com/Dimpal-Kalita/LetsNormalizeIt-backend/internal/handlers"
+	"github.com/Dimpal-Kalita/LetsNormalizeIt-backend/internal/middleware"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/mongo"
 )
@@ -17,6 +18,8 @@ func NewRouter(db *mongo.Client, jwtSecret string) *gin.Engine {
 	} else {
 		gin.SetMode(gin.DebugMode)
 	}
+
+	r.Use(middleware.CORSmiddleware())
 
 	authService := &auth.AuthHandler{DB: db.Database("LetsNormaliZeIt"), JWTSecret: jwtSecret}
 	authHandler := &handlers.AuthHandler{AuthService: authService}
