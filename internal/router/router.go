@@ -37,11 +37,11 @@ func NewRouter(db *mongo.Client, jwtSecret string) *gin.Engine {
 
 	// blog functions
 	blogHandler := &handlers.BlogHandler{DB: db.Database("LetsNormaliZeIt")}
-	r.POST("/create-blog", blogHandler.CreateBlog)
-	r.PATCH("/update-blog/:id", blogHandler.UpdateBlog)
-	r.GET("/blogs", blogHandler.GetBlogs)
-	r.GET("/blog/:id", blogHandler.GetBlog)
-	r.GET("/user/blog", blogHandler.GetUserBlog)
-	r.DELETE("/blog/:id", blogHandler.DeleteBlog)
+	r.POST("/blog/create", blogHandler.CreateBlog)
+	r.PATCH("blog/update/:id", blogHandler.UpdateBlog)
+	r.GET("blog/blogs", blogHandler.GetBlogs)
+	r.GET("/blog/blog/:id", blogHandler.GetBlog)
+	r.GET("/blog/user", blogHandler.GetUserBlog)
+	r.DELETE("/blog/blog/:id", blogHandler.DeleteBlog)
 	return r
 }
