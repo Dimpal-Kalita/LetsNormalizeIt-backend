@@ -25,23 +25,23 @@ func NewRouter(db *mongo.Client, jwtSecret string) *gin.Engine {
 	authHandler := &handlers.AuthHandler{AuthService: authService}
 
 	r.POST("/register", authHandler.Register)
-	r.PATCH("/verify/:token", authHandler.VerifyEmail)
-	r.GET("/login", authHandler.Login)
+	r.POST("/verify/:token", authHandler.VerifyEmail)
+	r.POST("/login", authHandler.Login)
 	r.PATCH("/forgot-password", authHandler.ForgotPassword)
 	r.PATCH("/reset-password/:token", authHandler.ResetPassword)
-	r.GET("/validate-token", authHandler.ValidateToken)
+	r.POST("/validate-token", authHandler.ValidateToken)
 
 	// user functions
 	userHandler := &handlers.UserHandler{DB: db.Database("LetsNormaliZeIt"), JWTSecret: jwtSecret}
-	r.GET("/userEmail/:token", userHandler.GetEmailFromToken)
+	r.POST("/userEmail/:token", userHandler.GetEmailFromToken)
 
 	// blog functions
 	blogHandler := &handlers.BlogHandler{DB: db.Database("LetsNormaliZeIt")}
 	r.POST("/blog/create", blogHandler.CreateBlog)
 	r.PATCH("blog/update/:id", blogHandler.UpdateBlog)
-	r.GET("blog/blogs", blogHandler.GetBlogs)
-	r.GET("/blog/blog/:id", blogHandler.GetBlog)
-	r.GET("/blog/user", blogHandler.GetUserBlog)
+	r.POST("blog/blogs", blogHandler.GetBlogs)
+	r.POST("/blog/blog/:id", blogHandler.GetBlog)
+	r.POST("/blog/user", blogHandler.GetUserBlog)
 	r.DELETE("/blog/blog/:id", blogHandler.DeleteBlog)
 	return r
 }

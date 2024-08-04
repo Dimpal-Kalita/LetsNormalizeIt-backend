@@ -48,6 +48,7 @@ func (h *AuthHandler) Login(c *gin.Context) {
 	token, err := h.AuthService.Login(request.Email, request.Password)
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
+		return
 	}
 	c.JSON(200, gin.H{"message": "Logged in Successfully", "token": token})
 }
@@ -73,6 +74,7 @@ func (h *AuthHandler) ResetPassword(c *gin.Context) {
 	token := c.Param("token")
 	if err := c.ShouldBindJSON(&request); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
+		return
 	}
 	err := h.AuthService.ResetPassword(token, request.NewPassword)
 	if err != nil {

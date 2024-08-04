@@ -19,13 +19,13 @@ type AuthHandler struct {
 }
 
 type User struct {
-	ID                      string `json:"id" bson:"_id,omitempty"`
-	Email                   string `json:"email" bson:"email"`
-	Password                string `json:"password" bson:"password"`
-	Verified                bool   `json:"verified" bson:"verified"`
-	VerificationToken       string `json:"verification_token" bson:"verification_token,omitempty"`
-	ResetPasswordToken      string `json:"reset_password_token" bson:"reset_password_token,omitempty"`
-	RestPasswordTokenExpiry int64  `json:"reset_password_token_expiry" bson:"reset_password_token_expiry,omitempty"`
+	ID                       string `json:"id" bson:"_id,omitempty"`
+	Email                    string `json:"email" bson:"email"`
+	Password                 string `json:"password" bson:"password"`
+	Verified                 bool   `json:"verified" bson:"verified"`
+	VerificationToken        string `json:"verification_token" bson:"verification_token,omitempty"`
+	ResetPasswordToken       string `json:"reset_password_token" bson:"reset_password_token,omitempty"`
+	ResetPasswordTokenExpiry int64  `json:"reset_password_token_expiry" bson:"reset_password_token_expiry,omitempty"`
 }
 
 func (s *AuthHandler) Register(Email, password string) (string, error) {
@@ -121,7 +121,7 @@ func (s *AuthHandler) ResetPassword(token, password string) error {
 	if err != nil {
 		return fmt.Errorf("Invalid Token")
 	}
-	if user.RestPasswordTokenExpiry < time.Now().Unix() {
+	if user.ResetPasswordTokenExpiry < time.Now().Unix() {
 		return fmt.Errorf("Token expired")
 	}
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)

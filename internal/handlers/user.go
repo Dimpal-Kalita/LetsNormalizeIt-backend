@@ -12,13 +12,13 @@ type UserHandler struct {
 }
 
 type User struct {
-	ID                      string `json:"id" bson:"_id,omitempty"`
-	Email                   string `json:"email" bson:"email"`
-	Password                string `json:"password" bson:"password"`
-	Verified                bool   `json:"verified" bson:"verified"`
-	VerificationToken       string `json:"verification_token" bson:"verification_token,omitempty"`
-	ResetPasswordToken      string `json:"reset_password_token" bson:"reset_password_token,omitempty"`
-	RestPasswordTokenExpiry int64  `json:"reset_password_token_expiry" bson:"reset_password_token_expiry,omitempty"`
+	ID                       string `json:"id" bson:"_id,omitempty"`
+	Email                    string `json:"email" bson:"email"`
+	Password                 string `json:"password" bson:"password"`
+	Verified                 bool   `json:"verified" bson:"verified"`
+	VerificationToken        string `json:"verification_token" bson:"verification_token,omitempty"`
+	ResetPasswordToken       string `json:"reset_password_token" bson:"reset_password_token,omitempty"`
+	ResetPasswordTokenExpiry int64  `json:"reset_password_token_expiry" bson:"reset_password_token_expiry,omitempty"`
 }
 
 func (s *UserHandler) GetEmailFromToken(c *gin.Context) {
@@ -28,5 +28,5 @@ func (s *UserHandler) GetEmailFromToken(c *gin.Context) {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(200, email)
+	c.JSON(200, gin.H{"email": email})
 }
